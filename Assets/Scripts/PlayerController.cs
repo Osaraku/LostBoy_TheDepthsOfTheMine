@@ -4,11 +4,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirection))]
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public float airWalkSpeed = 3f;
+    public float jumpImpulse = 10f;
+
     Vector2 moveInput;
+    TouchingDirection touchingDirection;
+
+    public float currentMoveSpeed {  get 
+        { 
+            if (isMoving && !touchingDirection.isOnWall)
+            {
+                if (touchingDirection.isGrounded)
+                {
+                    return moveSpeed;
+                }
+                else
+                {
+                    return airWalkSpeed;
+                }
+            }
+            else
+            {
+                return 0;
+            }
+        } 
+    }
 
     [SerializeField]
     private bool _isMoving = false;
@@ -49,6 +73,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();    
+        touchingDirection = GetComponent<TouchingDirection>();
     }
 
     // Start is called before the first frame update
@@ -65,7 +90,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(moveInput.x * currentMoveSpeed, rb.velocity.y);
+
+        animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
     }
 
     public void onMove(InputAction.CallbackContext context)
@@ -75,6 +102,16 @@ public class PlayerController : MonoBehaviour
         isMoving = moveInput != Vector2.zero;
 
         setFacingDirection(moveInput);
+    }
+
+    public void onJump(InputAction.CallbackContext context)
+    {
+        // TODO check if alive & check if have air jump
+        if (context.started && touchingDirection.isGrounded)
+        {
+            animator.SetTrigger(AnimationStrings.jump);
+            rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
+        }
     }
 
     private void setFacingDirection(Vector2 moveInput)

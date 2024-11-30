@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7022172969953452335}
   - component: {fileID: 7967022485440116607}
   - component: {fileID: 7989032365427124262}
+  - component: {fileID: 8793848608019984892}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -114,7 +115,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &6046015100220001615
 MonoBehaviour:
@@ -129,6 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  jumpImpulse: 7
   _isMoving: 0
   _isFacingRight: 1
 --- !u!114 &7022172969953452335
@@ -220,6 +222,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 4d3aa1d8-d009-4c73-839a-549de3f84e91
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6046015100220001615}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: onJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5e058873-d71d-4f09-85d7-f788dcd0cd6a
+    m_ActionName: Player/Jump[/Keyboard/space,/Keyboard/w]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -281,3 +299,35 @@ CapsuleCollider2D:
   m_Offset: {x: -0.0040702224, y: -0.24468505}
   m_Size: {x: 0.7286602, y: 1.7048132}
   m_Direction: 0
+--- !u!114 &8793848608019984892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8877583548782141071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0540ab02401d5b44b90582451e8e58a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  castFilter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  groundDistance: 0.05
+  wallDistance: 0.2
+  ceilingDistance: 0.05
+  _isGrounded: 1
+  _isOnWall: 1
+  _isOnCeiling: 1
