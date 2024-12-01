@@ -16,16 +16,23 @@ public class PlayerController : MonoBehaviour
 
     public float currentMoveSpeed {  get 
         { 
-            if (isMoving && !touchingDirection.isOnWall)
+            if (canMove)
             {
-                if (touchingDirection.isGrounded)
+                if (isMoving && !touchingDirection.isOnWall)
                 {
-                    return moveSpeed;
+                    if (touchingDirection.isGrounded)
+                    {
+                        return moveSpeed;
+                    }
+                    else
+                    {
+                        return airWalkSpeed;
+                    }
                 }
                 else
                 {
-                    return airWalkSpeed;
-                }
+                    return 0;
+                }   
             }
             else
             {
@@ -62,6 +69,12 @@ public class PlayerController : MonoBehaviour
                 transform.localScale *= new Vector2(-1, 1);
             }
             _isFacingRight = value;
+        }
+    }
+
+    public bool canMove { get
+        {
+            return animator.GetBool(AnimationStrings.canMove);
         }
     }
 
@@ -107,13 +120,20 @@ public class PlayerController : MonoBehaviour
     public void onJump(InputAction.CallbackContext context)
     {
         // TODO check if alive & check if have air jump
-        if (context.started && touchingDirection.isGrounded)
+        if (context.started && touchingDirection.isGrounded && canMove)
         {
-            animator.SetTrigger(AnimationStrings.jump);
+            animator.SetTrigger(AnimationStrings.jumpTrigger);
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
         }
     }
 
+    public void onPickaxe(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            animator.SetTrigger(AnimationStrings.pickaxeTrigger);
+        }
+    }
     private void setFacingDirection(Vector2 moveInput)
     {
         if(moveInput.x > 0 && !isFacingRight)
