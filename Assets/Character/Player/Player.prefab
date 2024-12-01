@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7022172969953452335}
   - component: {fileID: 7967022485440116607}
   - component: {fileID: 7989032365427124262}
-  - component: {fileID: 8793848608019984892}
+  - component: {fileID: 1798017898000850806}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 4dea7328e5d189547be0e22b10cfc1f5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  airWalkSpeed: 3
+  airWalkSpeed: 4
   jumpImpulse: 7
   _isMoving: 0
   _isFacingRight: 1
@@ -312,7 +312,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.0040702224, y: -0.24468505}
   m_Size: {x: 0.7286602, y: 1.7048132}
   m_Direction: 0
---- !u!114 &8793848608019984892
+--- !u!114 &1798017898000850806
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -321,19 +321,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 8877583548782141071}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0540ab02401d5b44b90582451e8e58a, type: 3}
+  m_Script: {fileID: 11500000, guid: 6dae4f0408bd6394ba69bfc76b59aa4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   castFilter:
     useTriggers: 0
-    useLayerMask: 0
+    useLayerMask: 1
     useDepth: 0
     useOutsideDepth: 0
     useNormalAngle: 0
     useOutsideNormalAngle: 0
     layerMask:
       serializedVersion: 2
-      m_Bits: 0
+      m_Bits: 64
     minDepth: 0
     maxDepth: 0
     minNormalAngle: 0
