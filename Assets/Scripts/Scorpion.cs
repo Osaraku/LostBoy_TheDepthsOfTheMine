@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirection))]
 public class Scorpion : MonoBehaviour
 {
     public float moveSpeed = 3f;
+    public float moveStopRate = 0.05f;
+    public DetectionZone attackZone;
 
     Rigidbody2D rb;
     TouchingDirection touchingDirection;
+    Animator animator;
 
     public enum MoveableDirection { Left, Right };
 
@@ -38,10 +42,39 @@ public class Scorpion : MonoBehaviour
             _moveDirection = value; }
     }
 
+    public bool _hasTarget  = false;
+
+    public bool HasTarget { 
+        get 
+        { 
+            return _hasTarget; 
+        } 
+        private set 
+        { 
+            _hasTarget = value; 
+            animator.SetBool(AnimationStrings.hasTarget, value);
+        } 
+    }
+
+    public bool canMove
+    {
+        get
+        {
+            return animator.GetBool(AnimationStrings.canMove);
+        }
+    }
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         touchingDirection = GetComponent<TouchingDirection>();
+        animator = GetComponent<Animator>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        HasTarget = attackZone.detectionCollider.Count > 0;
     }
 
     private void FixedUpdate()
@@ -55,7 +88,11 @@ public class Scorpion : MonoBehaviour
         {
             hasFlipped = false; // Reset the flag if conditions are not met
         }
-        rb.velocity = new Vector2(moveSpeed * moveDirectionVector.x, rb.velocity.y);
+
+        if (canMove) 
+            rb.velocity = new Vector2(moveSpeed * moveDirectionVector.x, rb.velocity.y);
+        else
+            rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, 0, moveStopRate), rb.velocity.y);
     }
 
     private void FlipDirection() 
@@ -75,15 +112,5 @@ public class Scorpion : MonoBehaviour
 
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
