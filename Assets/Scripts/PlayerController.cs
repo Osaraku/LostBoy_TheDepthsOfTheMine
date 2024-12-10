@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirection))]
+[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirection), typeof(Damageable))]
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     Vector2 moveInput;
     TouchingDirection touchingDirection;
+    Damageable damageable;
 
     public float currentMoveSpeed {  get 
         { 
@@ -86,10 +87,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool lockVelocity { get
-        {
-            return animator.GetBool(AnimationStrings.lockVelocity);   
-        } }
+    
 
     Rigidbody2D rb;
 
@@ -100,6 +98,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();    
         touchingDirection = GetComponent<TouchingDirection>();
+        damageable = GetComponent<Damageable>();
     }
 
     // Start is called before the first frame update
@@ -116,7 +115,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!lockVelocity) 
+        if(!damageable.lockVelocity) 
             rb.velocity = new Vector2(moveInput.x * currentMoveSpeed, rb.velocity.y);
 
         animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);

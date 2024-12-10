@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirection))]
+[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirection), typeof(Damageable))]
 public class Scorpion : MonoBehaviour
 {
     public float moveSpeed = 3f;
@@ -13,11 +13,12 @@ public class Scorpion : MonoBehaviour
     Rigidbody2D rb;
     TouchingDirection touchingDirection;
     Animator animator;
+    Damageable damageable;
 
     public enum MoveableDirection { Left, Right };
 
     private MoveableDirection _moveDirection;
-    private Vector2 moveDirectionVector = Vector2.left;
+    private Vector2 moveDirectionVector = Vector2.right;
     private bool hasFlipped = false;
 
     public MoveableDirection moveDirection
@@ -43,8 +44,6 @@ public class Scorpion : MonoBehaviour
     }
 
     public bool _hasTarget  = false;
-    public int attackDamage = 10;
-    public Vector2 knockback = Vector2.zero;
 
     public bool HasTarget { 
         get 
@@ -71,6 +70,7 @@ public class Scorpion : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         touchingDirection = GetComponent<TouchingDirection>();
         animator = GetComponent<Animator>();
+        damageable = GetComponent<Damageable>();
     }
 
     // Update is called once per frame
@@ -90,11 +90,14 @@ public class Scorpion : MonoBehaviour
         {
             hasFlipped = false; // Reset the flag if conditions are not met
         }
+        if (!damageable.lockVelocity)
+        {
+            if (canMove)
+                rb.velocity = new Vector2(moveSpeed * moveDirectionVector.x, rb.velocity.y);
+            else
+                rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, 0, moveStopRate), rb.velocity.y);
 
-        if (canMove) 
-            rb.velocity = new Vector2(moveSpeed * moveDirectionVector.x, rb.velocity.y);
-        else
-            rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, 0, moveStopRate), rb.velocity.y);
+        }
     }
 
     private void FlipDirection() 
@@ -114,15 +117,11 @@ public class Scorpion : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void onHit(int damage, Vector2 knockback)
     {
-        Damageable damageable = collision.GetComponent<Damageable>();
-
-        if(damageable != null)
-        {
-            bool gotHit = damageable.Hit(attackDamage, knockback);
-        }
+        rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
     }
+
 
 
 }

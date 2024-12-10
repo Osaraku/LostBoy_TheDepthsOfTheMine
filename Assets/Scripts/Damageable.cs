@@ -63,7 +63,25 @@ public class Damageable : MonoBehaviour
         {
             _isAlive = value;
             animator.SetBool(AnimationStrings.isAlive, value);
-            Debug.Log("isAlive set" +  value);
+
+
+            // Jika objek mati, hancurkan objek
+            //if (!_isAlive)
+            //{
+            //    StartCoroutine(DestroyAfterDelay(2f));
+            //}
+        }
+    }
+
+    public bool lockVelocity
+    {
+        get
+        {
+            return animator.GetBool(AnimationStrings.lockVelocity);
+        }
+        set
+        {
+            animator.SetBool(AnimationStrings.lockVelocity, value);
         }
     }
 
@@ -94,11 +112,18 @@ public class Damageable : MonoBehaviour
             isInvincible = true;
 
             animator.SetTrigger(AnimationStrings.hitTrigger);
+            lockVelocity = true;
             DamageableHit?.Invoke(damage, knockback);
 
             return true;
         }
 
         return false;
+    }
+
+    private IEnumerator DestroyAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(gameObject);
     }
 }
