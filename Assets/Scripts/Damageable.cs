@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Damageable : MonoBehaviour
 {
+    public UnityEvent<int, Vector2> DamageableHit;
+
     Animator animator;
 
     [SerializeField]
@@ -35,7 +38,7 @@ public class Damageable : MonoBehaviour
             _health = value;
 
             // health < 0 = death
-            if (value < 0) 
+            if (value <= 0) 
             {
                 IsAlive = false;
             }
@@ -46,6 +49,7 @@ public class Damageable : MonoBehaviour
     private bool _isAlive = true;
     [SerializeField]
     private bool isInvincible = false;
+
     private float timeSinceHit = 0;
     public float invincibilityTime = 0.25f;
 
@@ -80,15 +84,21 @@ public class Damageable : MonoBehaviour
 
             timeSinceHit += Time.deltaTime;
         }
-        Hit(1);
     }
 
-    public void Hit(int damage)
+    public bool Hit(int damage, Vector2 knockback)
     {
         if (IsAlive && !isInvincible)
         {
             Health -= damage;
             isInvincible = true;
+
+            animator.SetTrigger(AnimationStrings.hitTrigger);
+            DamageableHit?.Invoke(damage, knockback);
+
+            return true;
         }
+
+        return false;
     }
 }

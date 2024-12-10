@@ -5837,28 +5837,6 @@ Transform:
   - {fileID: 1054638280}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1945749182 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8877583548782141071, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
-  m_PrefabInstance: {fileID: 7985907899846563198}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1945749183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1945749182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 592500ff1f011c047be64813d5ffbccd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxHealth: 0
-  _health: 1
-  _isAlive: 1
-  isInvincible: 0
-  invincibilityTime: 0.25
 --- !u!1001 &7985907899846563198
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5907,22 +5885,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5171595905166630568, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
+      propertyPath: _health
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 8877583548782141071, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8877583548782141071, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
-      propertyPath: m_Layer
-      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8793848608019984892, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8877583548782141071, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1945749183}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
 --- !u!1001 &8903660722626213427
 PrefabInstance:
@@ -5975,10 +5950,6 @@ PrefabInstance:
     - target: {fileID: 7270754763652035662, guid: 58efa211ce9bcf8449fb6f13bfd5a7f8, type: 3}
       propertyPath: m_Name
       value: ScorpionEnemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 7270754763652035662, guid: 58efa211ce9bcf8449fb6f13bfd5a7f8, type: 3}
-      propertyPath: m_Layer
-      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

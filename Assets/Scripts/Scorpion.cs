@@ -43,6 +43,8 @@ public class Scorpion : MonoBehaviour
     }
 
     public bool _hasTarget  = false;
+    public int attackDamage = 10;
+    public Vector2 knockback = Vector2.zero;
 
     public bool HasTarget { 
         get 
@@ -110,6 +112,16 @@ public class Scorpion : MonoBehaviour
             Debug.LogError("walkable tidak diset right / left");
         }
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Damageable damageable = collision.GetComponent<Damageable>();
+
+        if(damageable != null)
+        {
+            bool gotHit = damageable.Hit(attackDamage, knockback);
+        }
     }
 
 

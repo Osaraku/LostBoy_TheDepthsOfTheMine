@@ -65,7 +65,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.18673825, y: -0.073563576}
+  m_Offset: {x: 0.0046434402, y: -0.07934332}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -76,7 +76,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2829356, y: 0.85287285}
+  m_Size: {x: 1.1544857, y: 0.84131336}
   m_EdgeRadius: 0
 --- !u!114 &3181003961966443418
 MonoBehaviour:
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 3079490876752415764}
   - component: {fileID: 6647448907133122893}
   - component: {fileID: 8531935351677437162}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ScorpionEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,8 +241,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0037396185, y: -0.18898876}
-  m_Size: {x: 0.8228648, y: 0.6190601}
+  m_Offset: {x: -0.004599837, y: -0.22556552}
+  m_Size: {x: 0.94691014, y: 0.5459185}
   m_Direction: 1
 --- !u!114 &690316288981376642
 MonoBehaviour:
@@ -313,6 +313,8 @@ MonoBehaviour:
   moveStopRate: 0.02
   attackZone: {fileID: 3181003961966443418}
   _hasTarget: 0
+  attackDamage: 10
+  knockback: {x: 7, y: 5}
 --- !u!114 &8531935351677437162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,6 +327,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 592500ff1f011c047be64813d5ffbccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DamageableHit:
+    m_PersistentCalls:
+      m_Calls: []
   _maxHealth: 10
   _health: 10
   _isAlive: 1
