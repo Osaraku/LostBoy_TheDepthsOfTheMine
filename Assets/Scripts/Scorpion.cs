@@ -9,6 +9,7 @@ public class Scorpion : MonoBehaviour
     public float moveSpeed = 3f;
     public float moveStopRate = 0.05f;
     public DetectionZone attackZone;
+    public DetectionZone cliffDetectionZone;
 
     Rigidbody2D rb;
     TouchingDirection touchingDirection;
@@ -18,7 +19,7 @@ public class Scorpion : MonoBehaviour
     public enum MoveableDirection { Left, Right };
 
     private MoveableDirection _moveDirection;
-    private Vector2 moveDirectionVector = Vector2.right;
+    private Vector2 moveDirectionVector = Vector2.left;
     private bool hasFlipped = false;
 
     public MoveableDirection moveDirection
@@ -76,15 +77,17 @@ public class Scorpion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HasTarget = attackZone.detectionCollider.Count > 0;
+        HasTarget = attackZone.detectedColliders.Count > 0;
     }
 
     private void FixedUpdate()
     {
+        Debug.Log($"hasFlipped: {hasFlipped}, isOnWall: {touchingDirection.isOnWall}, isGrounded: {touchingDirection.isGrounded}");
         if (!hasFlipped && touchingDirection.isOnWall && touchingDirection.isGrounded)
         {
             FlipDirection();
             hasFlipped = true;
+            Debug.Log($"Flip");
         }
         else if (!touchingDirection.isOnWall || !touchingDirection.isGrounded)
         {
@@ -120,6 +123,15 @@ public class Scorpion : MonoBehaviour
     public void onHit(int damage, Vector2 knockback)
     {
         rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
+    }
+
+    public void onCliffDetected()
+    {  
+        if (touchingDirection.isGrounded)
+        {
+            FlipDirection();
+        }
+
     }
 
 
