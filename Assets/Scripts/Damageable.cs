@@ -29,7 +29,7 @@ public class Damageable : MonoBehaviour
 
     public int Health
     {
-        get 
+        get
         {
             return _health;
         }
@@ -38,7 +38,7 @@ public class Damageable : MonoBehaviour
             _health = value;
 
             // health < 0 = death
-            if (value <= 0) 
+            if (value <= 0)
             {
                 IsAlive = false;
             }
@@ -92,9 +92,9 @@ public class Damageable : MonoBehaviour
 
     private void Update()
     {
-        if (isInvincible) 
+        if (isInvincible)
         {
-            if(timeSinceHit > invincibilityTime)
+            if (timeSinceHit > invincibilityTime)
             {
                 isInvincible = false;
                 timeSinceHit = 0;
@@ -114,6 +114,7 @@ public class Damageable : MonoBehaviour
             animator.SetTrigger(AnimationStrings.hitTrigger);
             lockVelocity = true;
             DamageableHit?.Invoke(damage, knockback);
+            CharacterEvents.characterDamaged.Invoke(gameObject, damage);
 
             return true;
         }
