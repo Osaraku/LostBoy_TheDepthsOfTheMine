@@ -122,6 +122,19 @@ public class Damageable : MonoBehaviour
         return false;
     }
 
+    public void Heal(int healthRestore)
+    {
+        if (IsAlive)
+        {
+            int maxHeal = Mathf.Max(MaxHealth - Health, 0);
+            int actualHeal = Mathf.Min(maxHeal, healthRestore);
+
+            Health += actualHeal;
+
+            CharacterEvents.characterHealed(gameObject, healthRestore);
+        }
+    }
+
     private IEnumerator DestroyAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
