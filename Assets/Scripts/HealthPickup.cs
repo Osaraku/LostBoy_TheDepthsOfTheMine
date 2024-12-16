@@ -2,14 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class HealthPickup : MonoBehaviour
 {
     public int healthRestore = 10;
     public float moveAmount = 0.1f; // Jarak gerakan naik/turun
     public float moveSpeed = 5f; // Kecepatan gerakan
 
+
+    AudioSource pickupSource;
+
     private Vector3 startPosition;
     private float timer;
+
+    private void Awake()
+    {
+        pickupSource = GetComponent<AudioSource>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +44,12 @@ public class HealthPickup : MonoBehaviour
         if (damageable)
         {
             damageable.Heal(healthRestore);
+
+            if (pickupSource)
+            {
+                AudioSource.PlayClipAtPoint(pickupSource.clip, gameObject.transform.position, pickupSource.volume);
+            }
+
             Destroy(gameObject);
         }
     }
