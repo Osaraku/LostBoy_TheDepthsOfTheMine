@@ -15,8 +15,10 @@ public class PlayerController : MonoBehaviour
     TouchingDirection touchingDirection;
     Damageable damageable;
 
-    public float currentMoveSpeed {  get 
-        { 
+    public float currentMoveSpeed
+    {
+        get
+        {
             if (canMove)
             {
                 if (isMoving && !touchingDirection.isOnWall)
@@ -33,13 +35,13 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     return 0;
-                }   
+                }
             }
             else
             {
                 return 0;
             }
-        } 
+        }
     }
 
     [SerializeField]
@@ -73,7 +75,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool canMove { get
+    public bool canMove
+    {
+        get
         {
             return animator.GetBool(AnimationStrings.canMove);
         }
@@ -87,8 +91,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
-
     Rigidbody2D rb;
 
     Animator animator;
@@ -96,7 +98,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();    
+        animator = GetComponent<Animator>();
         touchingDirection = GetComponent<TouchingDirection>();
         damageable = GetComponent<Damageable>();
     }
@@ -115,7 +117,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!damageable.lockVelocity) 
+        if (!damageable.lockVelocity)
             rb.velocity = new Vector2(moveInput.x * currentMoveSpeed, rb.velocity.y);
 
         animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
@@ -155,11 +157,11 @@ public class PlayerController : MonoBehaviour
     }
     private void setFacingDirection(Vector2 moveInput)
     {
-        if(moveInput.x > 0 && !isFacingRight)
+        if (moveInput.x > 0 && !isFacingRight)
         {
             isFacingRight = true;
         }
-        else if(moveInput.x < 0 && isFacingRight)
+        else if (moveInput.x < 0 && isFacingRight)
         {
             isFacingRight = false;
         }

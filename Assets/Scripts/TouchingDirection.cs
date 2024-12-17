@@ -6,7 +6,7 @@ public class TouchingDirection : MonoBehaviour
 {
     public ContactFilter2D castFilter;
     public float groundDistance = 0.05f;
-    public float wallDistance = 0.3f;
+    public float wallDistance = 0.5f;
     public float ceilingDistance = 0.05f;
 
     CapsuleCollider2D touchingCol;
@@ -19,13 +19,15 @@ public class TouchingDirection : MonoBehaviour
     [SerializeField]
     private bool _isGrounded = true;
 
-    public bool isGrounded { get 
-        { 
-            return _isGrounded; 
-        } 
-        private set 
-        { 
-            _isGrounded=value;
+    public bool isGrounded
+    {
+        get
+        {
+            return _isGrounded;
+        }
+        private set
+        {
+            _isGrounded = value;
             animator.SetBool(AnimationStrings.isGrounded, value);
         }
     }
@@ -72,7 +74,7 @@ public class TouchingDirection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame

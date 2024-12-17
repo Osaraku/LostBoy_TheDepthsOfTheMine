@@ -25,37 +25,40 @@ public class Scorpion : MonoBehaviour
     public MoveableDirection moveDirection
     {
         get { return _moveDirection; }
-        set {
+        set
+        {
             if (_moveDirection != value)
             {
                 gameObject.transform.localScale = new Vector2(gameObject.transform.localScale.x * -1, gameObject.transform.localScale.y);
-                
+
                 if (value == MoveableDirection.Left)
                 {
                     moveDirectionVector = Vector2.left;
                 }
-                else if (value == MoveableDirection.Right) 
-                { 
-                    moveDirectionVector = Vector2.right; 
+                else if (value == MoveableDirection.Right)
+                {
+                    moveDirectionVector = Vector2.right;
                 }
-            
+
             }
-            
-            _moveDirection = value; }
+
+            _moveDirection = value;
+        }
     }
 
-    public bool _hasTarget  = false;
+    public bool _hasTarget = false;
 
-    public bool HasTarget { 
-        get 
-        { 
-            return _hasTarget; 
-        } 
-        private set 
-        { 
-            _hasTarget = value; 
+    public bool HasTarget
+    {
+        get
+        {
+            return _hasTarget;
+        }
+        private set
+        {
+            _hasTarget = value;
             animator.SetBool(AnimationStrings.hasTarget, value);
-        } 
+        }
     }
 
     public bool canMove
@@ -82,7 +85,7 @@ public class Scorpion : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log($"hasFlipped: {hasFlipped}, isOnWall: {touchingDirection.isOnWall}, isGrounded: {touchingDirection.isGrounded}");
+        // Debug.Log($"hasFlipped: {hasFlipped}, isOnWall: {touchingDirection.isOnWall}, isGrounded: {touchingDirection.isGrounded}");
         if (!hasFlipped && touchingDirection.isOnWall && touchingDirection.isGrounded)
         {
             FlipDirection();
@@ -103,7 +106,7 @@ public class Scorpion : MonoBehaviour
         }
     }
 
-    private void FlipDirection() 
+    private void FlipDirection()
     {
         if (moveDirection == MoveableDirection.Left)
         {
@@ -126,7 +129,7 @@ public class Scorpion : MonoBehaviour
     }
 
     public void onCliffDetected()
-    {  
+    {
         if (touchingDirection.isGrounded)
         {
             FlipDirection();

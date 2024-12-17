@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageTextPrefab: {fileID: 1490769268925889166, guid: 493148732e6739d46b34ad83cdce9ec0, type: 3}
   healthTextPrefab: {fileID: 1490769268925889166, guid: 0371912afb2c71747a7cee62de41c629, type: 3}
+  upgradeTextPrefab: {fileID: 4681944884268864354, guid: c5bb897d4f1b432409384a6b267454b7, type: 3}
   gameCanvas: {fileID: 0}
 --- !u!114 &8689852528970211012
 MonoBehaviour:
