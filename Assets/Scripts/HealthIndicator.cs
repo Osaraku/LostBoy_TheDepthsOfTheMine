@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ public class HealthIndicator : MonoBehaviour
 {
     public TMP_Text healthText;
     Damageable playerDamageable;
-    private float healthPercentage;
+    public float healthPercentage;
 
     private void Awake()
     {
@@ -19,8 +18,13 @@ public class HealthIndicator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        healthPercentage = playerDamageable.Health / playerDamageable.MaxHealth;
+        healthPercentage = calculateHealthPercentage(playerDamageable.Health, playerDamageable.MaxHealth);
         healthText.text = playerDamageable.Health.ToString();
+    }
+
+    public float calculateHealthPercentage(float currentHealth, float maxHealth)
+    {
+        return (float)currentHealth / maxHealth;
     }
 
     private void OnEnable()
@@ -35,8 +39,28 @@ public class HealthIndicator : MonoBehaviour
 
     private void OnPlayerHealthChanged(int newHealth, int maxHealth)
     {
-        healthPercentage = newHealth / maxHealth;
+        healthPercentage = calculateHealthPercentage(newHealth, maxHealth);
         healthText.text = newHealth.ToString();
+        if (healthPercentage > 0.7)
+        {
+            transform.GetChild(3).gameObject.SetActive(true);
+        }
+        else if (healthPercentage > 0.45 && healthPercentage <= 0.7)
+        {
+            transform.GetChild(3).gameObject.SetActive(false);
+            transform.GetChild(2).gameObject.SetActive(true);
+        }
+        else if (healthPercentage > 0 && healthPercentage <= 0.45)
+        {
+            transform.GetChild(2).gameObject.SetActive(false);
+            transform.GetChild(1).gameObject.SetActive(true);
+        }
+        else if (healthPercentage == 0)
+        {
+            transform.GetChild(1).gameObject.SetActive(false);
+            transform.GetChild(0).gameObject.SetActive(true);
+        }
+
     }
 
     // Update is called once per frame
