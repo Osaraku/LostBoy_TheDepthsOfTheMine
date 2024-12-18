@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66e1c7d0fbd521240a363b1099027538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthRestore: 10
+  healthRestore: 25
   moveAmount: 0.1
   moveSpeed: 5
 --- !u!61 &4364051432523684381

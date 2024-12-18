@@ -34,7 +34,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d76639bd5f34ad4a8931b73b717c1ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeTime: 3
+  fadeTime: 2
 --- !u!1101 &-4122283983455096485
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
