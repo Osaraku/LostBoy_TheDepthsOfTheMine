@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
@@ -74,7 +75,7 @@ public class UIManager : MonoBehaviour
         if (context.started)
         {
             Debug.Log(this.name + " : " + this.GetType() + " : " + System.Reflection.MethodBase.GetCurrentMethod().Name);
-            Application.Quit();
+            SceneManager.LoadSceneAsync(0);
         }
     }
 }
