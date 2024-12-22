@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6816577792131904045}
   - component: {fileID: 1541281442274884040}
   - component: {fileID: 2338149048843515408}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 5
-  knockback: {x: 5, y: 2}
+  knockback: {x: 5, y: 0}
 --- !u!1 &1863018457676024366
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 5196300148934685336}
   - component: {fileID: 302267938062316100}
   - component: {fileID: 4375616480517303932}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: AirAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -125,7 +125,10 @@ public class Scorpion : MonoBehaviour
 
     public void onHit(int damage, Vector2 knockback)
     {
-        rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
+        if (moveDirection == MoveableDirection.Left)
+            rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
+        else
+            rb.velocity = new Vector2(knockback.x * -1, rb.velocity.y + knockback.y);
     }
 
     public void onCliffDetected()

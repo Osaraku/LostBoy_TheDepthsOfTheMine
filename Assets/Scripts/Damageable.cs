@@ -65,13 +65,6 @@ public class Damageable : MonoBehaviour
         {
             _isAlive = value;
             animator.SetBool(AnimationStrings.isAlive, value);
-
-
-            // Jika objek mati, hancurkan objek
-            //if (!_isAlive)
-            //{
-            //    StartCoroutine(DestroyAfterDelay(2f));
-            //}
         }
     }
 

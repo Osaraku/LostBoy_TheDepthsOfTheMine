@@ -452,6 +452,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  healthChanged:
+    m_PersistentCalls:
+      m_Calls: []
   _maxHealth: 10
   _health: 10
   _isAlive: 1
@@ -555,4 +558,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 10
-  knockback: {x: -7, y: 5}
+  knockback: {x: 7, y: 5}

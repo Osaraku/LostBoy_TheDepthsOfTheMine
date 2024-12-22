@@ -169,6 +169,9 @@ public class PlayerController : MonoBehaviour
 
     public void onHit(int damage, Vector2 knockback)
     {
-        rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
+        if (!isFacingRight)
+            rb.velocity = new Vector2(knockback.x, knockback.y);
+        else
+            rb.velocity = new Vector2(knockback.x * -1, knockback.y);
     }
 }
