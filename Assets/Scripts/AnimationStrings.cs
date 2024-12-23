@@ -11,6 +11,7 @@ internal class AnimationStrings
     internal static string isGrounded = "isGrounded";
     internal static string yVelocity = "yVelocity";
     internal static string jumpTrigger = "jump";
+    internal static string hasAirJump = "hasAirJump";
     internal static string isOnWall = "isOnWall";
     internal static string isOnCeiling = "isOnCeiling";
     internal static string pickaxeTrigger = "pickaxe";

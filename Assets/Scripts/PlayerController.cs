@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public float airWalkSpeed = 3f;
     public float jumpImpulse = 10f;
+    public bool enableAirJump = true;
 
     Vector2 moveInput;
     TouchingDirection touchingDirection;
@@ -91,6 +92,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool _hasAirJump = false;
+    public bool isOnPlatform;
+    public Rigidbody2D platformRb;
+
     Rigidbody2D rb;
 
     Animator animator;
@@ -103,22 +108,28 @@ public class PlayerController : MonoBehaviour
         damageable = GetComponent<Damageable>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
-
+        if (touchingDirection.isGrounded)
+        {
+            _hasAirJump = false;
+            animator.SetBool(AnimationStrings.hasAirJump, false);
+        }
     }
 
     private void FixedUpdate()
     {
         if (!damageable.lockVelocity)
-            rb.velocity = new Vector2(moveInput.x * currentMoveSpeed, rb.velocity.y);
+        {
+            if (isOnPlatform)
+            {
+                Debug.Log("onPlatform");
+                rb.velocity = new Vector2((moveInput.x * currentMoveSpeed) + platformRb.velocity.x, rb.velocity.y);
+            }
+            else
+                rb.velocity = new Vector2(moveInput.x * currentMoveSpeed, rb.velocity.y);
+        }
 
         animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
     }
@@ -145,6 +156,13 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetTrigger(AnimationStrings.jumpTrigger);
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
+        }
+        else if (context.started && !touchingDirection.isGrounded && canMove && !_hasAirJump)
+        {
+            animator.SetTrigger(AnimationStrings.jumpTrigger);
+            rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
+            _hasAirJump = true;
+            animator.SetBool(AnimationStrings.hasAirJump, true);
         }
     }
 
