@@ -11,10 +11,21 @@ public class PlayerController : MonoBehaviour
     public float airWalkSpeed = 3f;
     public float jumpImpulse = 10f;
     public bool enableAirJump = true;
+    private bool hasAirJump = false;
+    public bool isOnPlatform;
+    public bool enableDash = true;
+    private bool isDashing;
+    public float dashingPower = 24f;
+    public float dashingTime = 0.2f;
+    public float dashingCooldown = 1f;
+    private bool hasAirDashing = false;
+
 
     Vector2 moveInput;
     TouchingDirection touchingDirection;
     Damageable damageable;
+    public Rigidbody2D platformRb;
+    public TrailRenderer tr;
 
     public float currentMoveSpeed
     {
@@ -92,10 +103,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool _hasAirJump = false;
-    public bool isOnPlatform;
-    public Rigidbody2D platformRb;
-
     Rigidbody2D rb;
 
     Animator animator;
@@ -106,20 +113,33 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         touchingDirection = GetComponent<TouchingDirection>();
         damageable = GetComponent<Damageable>();
+        tr = GetComponent<TrailRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isDashing)
+        {
+            return;
+        }
+
         if (touchingDirection.isGrounded)
         {
-            _hasAirJump = false;
+            hasAirJump = false;
             animator.SetBool(AnimationStrings.hasAirJump, false);
+            hasAirDashing = false;
         }
+
     }
 
     private void FixedUpdate()
     {
+        if (isDashing)
+        {
+            return;
+        }
+
         if (!damageable.lockVelocity)
         {
             if (isOnPlatform)
@@ -130,6 +150,7 @@ public class PlayerController : MonoBehaviour
             else
                 rb.velocity = new Vector2(moveInput.x * currentMoveSpeed, rb.velocity.y);
         }
+
 
         animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
     }
@@ -157,12 +178,29 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger(AnimationStrings.jumpTrigger);
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
         }
-        else if (context.started && !touchingDirection.isGrounded && canMove && !_hasAirJump)
+        else if (context.started && !touchingDirection.isGrounded && canMove && !hasAirJump)
         {
             animator.SetTrigger(AnimationStrings.jumpTrigger);
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
-            _hasAirJump = true;
+            hasAirJump = true;
             animator.SetBool(AnimationStrings.hasAirJump, true);
+        }
+    }
+    public void onDash(InputAction.CallbackContext context)
+    {
+        if (context.started && enableDash && canMove)
+        {
+            if (touchingDirection.isGrounded)
+            {
+                animator.SetTrigger(AnimationStrings.dashTrigger);
+                StartCoroutine(Dash());
+            }
+            else if (!hasAirDashing)
+            {
+                animator.SetTrigger(AnimationStrings.dashTrigger);
+                StartCoroutine(Dash());
+                hasAirDashing = true;
+            }
         }
     }
 
@@ -191,5 +229,25 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(knockback.x, knockback.y);
         else
             rb.velocity = new Vector2(knockback.x * -1, knockback.y);
+    }
+
+    private IEnumerator Dash()
+    {
+        enableDash = false;
+        isDashing = true;
+
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+
+        tr.emitting = false;
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+
+        yield return new WaitForSeconds(dashingCooldown);
+        enableDash = true;
     }
 }

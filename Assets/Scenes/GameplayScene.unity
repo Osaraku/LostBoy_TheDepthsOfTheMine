@@ -33656,6 +33656,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7022172969953452335, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7022172969953452335, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_ActionId
+      value: 9ed5673c-f322-410c-bcd4-dd49efaf2bdb
+      objectReference: {fileID: 0}
+    - target: {fileID: 7022172969953452335, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_ActionName
+      value: Player/Dash[/Keyboard/leftShift]
+      objectReference: {fileID: 0}
+    - target: {fileID: 7022172969953452335, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7022172969953452335, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8877583548782141071, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
       propertyPath: m_Name
       value: Player
