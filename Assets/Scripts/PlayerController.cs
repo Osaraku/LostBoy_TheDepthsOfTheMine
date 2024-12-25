@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public float dashingTime = 0.2f;
     public float dashingCooldown = 1f;
     private bool hasAirDashing = false;
+    public float wallSlidingSpeed = 2f;
 
 
     Vector2 moveInput;
@@ -72,6 +74,37 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    private bool _isWallSliding = false;
+
+    public bool isWallSliding
+    {
+        get
+        {
+            return _isWallSliding;
+        }
+        private set
+        {
+            _isWallSliding = value;
+            animator.SetBool(AnimationStrings.isWallSliding, value);
+        }
+    }
+
+    private void wallSlide()
+    {
+
+        if (touchingDirection.isOnWall && !touchingDirection.isGrounded && moveInput.x != 0)
+        {
+            Debug.Log("Wall sliding");
+            isWallSliding = true;
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -wallSlidingSpeed));
+        }
+        else
+        {
+            isWallSliding = false;
+        }
+    }
+
     public bool _isFacingRight = true;
 
     public bool isFacingRight
@@ -119,6 +152,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        wallSlide();
         if (isDashing)
         {
             return;
@@ -131,10 +165,12 @@ public class PlayerController : MonoBehaviour
             hasAirDashing = false;
         }
 
+
     }
 
     private void FixedUpdate()
     {
+        wallSlide();
         if (isDashing)
         {
             return;
@@ -238,7 +274,26 @@ public class PlayerController : MonoBehaviour
 
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+
+        // Tentukan arah dash berdasarkan input
+        Vector2 dashDirection = new Vector2(moveInput.x, moveInput.y);
+
+        // Jika tidak ada input diagonal, fallback ke arah horizontal default
+        if (dashDirection == Vector2.zero)
+        {
+            dashDirection = new Vector2(isFacingRight ? 1f : -1f, 0f);
+        }
+
+        // Normalisasi arah dash untuk kecepatan konsisten di semua arah
+        dashDirection = dashDirection.normalized;
+
+        // Terapkan kecepatan dash
+        if (moveInput.y > 0)
+            rb.velocity = dashDirection * (dashingPower / 2);
+        else if (moveInput.y > 0 && (moveInput.x > 0 || moveInput.x < 0))
+            rb.velocity = dashDirection * (dashingPower / 4 * 3);
+        else
+            rb.velocity = dashDirection * dashingPower;
 
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
@@ -250,4 +305,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(dashingCooldown);
         enableDash = true;
     }
+
+
+
 }

@@ -339,13 +339,13 @@ MonoBehaviour:
   airWalkSpeed: 6
   jumpImpulse: 10
   enableAirJump: 1
-  hasAirJump: 0
   isOnPlatform: 0
   enableDash: 1
-  isDashing: 0
   dashingPower: 24
   dashingTime: 0.2
   dashingCooldown: 1
+  isWallSliding: 0
+  wallSlidingSpeed: 2
   platformRb: {fileID: 0}
   tr: {fileID: 4403464707890943203}
   _isMoving: 0
