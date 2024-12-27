@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public float airWalkSpeed = 3f;
     public float jumpImpulse = 10f;
+    private bool isJumpPressed = false;
     public bool enableAirJump = true;
     private bool hasAirJump = false;
     public bool isOnPlatform;
@@ -20,7 +21,13 @@ public class PlayerController : MonoBehaviour
     public float dashingTime = 0.2f;
     public float dashingCooldown = 1f;
     private bool hasAirDashing = false;
+    public bool enableWallSliding = true;
     public float wallSlidingSpeed = 2f;
+    public float wallJumpingDirection;
+    public float wallJumpingTime = 0.2f;
+    public float wallJumpingCounter;
+    public float wallJumpingDuration = 0.4f;
+    private Vector2 wallJumpingPower = new Vector2(5f, 10f);
 
 
     Vector2 moveInput;
@@ -90,12 +97,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    private bool _isWallJumping = false;
+
+    public bool isWallJumping
+    {
+        get
+        {
+            return _isWallJumping;
+        }
+        private set
+        {
+            _isWallJumping = value;
+            animator.SetBool(AnimationStrings.isWallJumping, value);
+        }
+    }
+
     private void wallSlide()
     {
 
-        if (touchingDirection.isOnWall && !touchingDirection.isGrounded && moveInput.x != 0)
+        if (touchingDirection.isOnWall && !touchingDirection.isGrounded && moveInput.x != 0 && enableWallSliding)
         {
-            Debug.Log("Wall sliding");
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -wallSlidingSpeed));
         }
@@ -103,6 +125,51 @@ public class PlayerController : MonoBehaviour
         {
             isWallSliding = false;
         }
+    }
+
+    public void onWallJump()
+    {
+        if (isWallSliding)
+        {
+            isWallJumping = false;
+            wallJumpingDirection = -transform.localScale.x;
+            wallJumpingCounter = wallJumpingTime;
+
+            CancelInvoke(nameof(stopWallJumping));
+        }
+        else
+        {
+            wallJumpingCounter -= Time.deltaTime;
+        }
+
+        if (isJumpPressed && wallJumpingCounter > 0f)
+        {
+            animator.SetTrigger(AnimationStrings.jumpTrigger);
+            isWallJumping = true;
+            rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
+            wallJumpingCounter = 0f;
+
+            if (transform.localScale.x != wallJumpingDirection)
+            {
+                if (moveInput.x > 0)
+                {
+                    isFacingRight = true;
+                    transform.localScale = new Vector3(1, 1, 1);
+                }
+                else if (moveInput.x < 0)
+                {
+                    isFacingRight = false;
+                    transform.localScale = new Vector3(-1, 1, 1);
+                }
+            }
+
+            Invoke(nameof(stopWallJumping), wallJumpingDuration);
+        }
+    }
+
+    private void stopWallJumping()
+    {
+        isWallJumping = false;
     }
 
     public bool _isFacingRight = true;
@@ -152,7 +219,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        wallSlide();
         if (isDashing)
         {
             return;
@@ -165,7 +231,8 @@ public class PlayerController : MonoBehaviour
             hasAirDashing = false;
         }
 
-
+        wallSlide();
+        onWallJump();
     }
 
     private void FixedUpdate()
@@ -178,16 +245,17 @@ public class PlayerController : MonoBehaviour
 
         if (!damageable.lockVelocity)
         {
-            if (isOnPlatform)
+            if (!isWallJumping)
             {
-                Debug.Log("onPlatform");
-                rb.velocity = new Vector2((moveInput.x * currentMoveSpeed) + platformRb.velocity.x, rb.velocity.y);
+                if (isOnPlatform)
+                {
+                    Debug.Log("onPlatform");
+                    rb.velocity = new Vector2((moveInput.x * currentMoveSpeed) + platformRb.velocity.x, rb.velocity.y);
+                }
+                else
+                    rb.velocity = new Vector2(moveInput.x * currentMoveSpeed, rb.velocity.y);
             }
-            else
-                rb.velocity = new Vector2(moveInput.x * currentMoveSpeed, rb.velocity.y);
         }
-
-
         animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
     }
 
@@ -208,13 +276,21 @@ public class PlayerController : MonoBehaviour
 
     public void onJump(InputAction.CallbackContext context)
     {
-        // TODO check if alive & check if have air jump
+        if (context.started)
+        {
+            isJumpPressed = true;
+        }
+        else if (context.canceled)
+        {
+            isJumpPressed = false;
+        }
+
         if (context.started && touchingDirection.isGrounded && canMove)
         {
             animator.SetTrigger(AnimationStrings.jumpTrigger);
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
         }
-        else if (context.started && !touchingDirection.isGrounded && canMove && !hasAirJump)
+        else if (context.started && !touchingDirection.isGrounded && !touchingDirection.isOnWall && canMove && !hasAirJump && enableAirJump)
         {
             animator.SetTrigger(AnimationStrings.jumpTrigger);
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
@@ -271,6 +347,7 @@ public class PlayerController : MonoBehaviour
     {
         enableDash = false;
         isDashing = true;
+        animator.SetBool(AnimationStrings.canMove, false);
 
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
@@ -300,6 +377,7 @@ public class PlayerController : MonoBehaviour
 
         tr.emitting = false;
         rb.gravityScale = originalGravity;
+        animator.SetBool(AnimationStrings.canMove, true);
         isDashing = false;
 
         yield return new WaitForSeconds(dashingCooldown);

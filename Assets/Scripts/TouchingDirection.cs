@@ -80,6 +80,7 @@ public class TouchingDirection : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
+        Physics2D.SyncTransforms();
         isGrounded = touchingCol.Cast(Vector2.down, castFilter, groundHits, groundDistance) > 0;
         isOnWall = touchingCol.Cast(wallCheckDirection, castFilter, wallHits, wallDistance) > 0;
         isOnCeiling = touchingCol.Cast(Vector2.up, castFilter, ceilingHits, ceilingDistance) > 0;

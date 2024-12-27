@@ -312,7 +312,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 2
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2616c50daae1ee344b75e3ab8f323eda, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -344,11 +344,16 @@ MonoBehaviour:
   dashingPower: 24
   dashingTime: 0.2
   dashingCooldown: 1
-  isWallSliding: 0
   wallSlidingSpeed: 2
+  wallJumpingDirection: 0
+  wallJumpingTime: 0.2
+  wallJumpingCounter: 0
+  wallJumpingDuration: 0.4
   platformRb: {fileID: 0}
   tr: {fileID: 4403464707890943203}
   _isMoving: 0
+  _isWallSliding: 0
+  _isWallJumping: 0
   _isFacingRight: 1
 --- !u!114 &7022172969953452335
 MonoBehaviour:

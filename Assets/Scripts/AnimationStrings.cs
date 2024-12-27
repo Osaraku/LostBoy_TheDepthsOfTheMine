@@ -23,4 +23,5 @@ internal class AnimationStrings
     internal static string lockVelocity = "lockVelocity";
     internal static string dashTrigger = "dash";
     internal static string isWallSliding = "isWallSliding";
+    internal static string isWallJumping = "isWallJumping";
 }

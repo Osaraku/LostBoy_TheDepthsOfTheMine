@@ -683,7 +683,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.08627451, g: 0.09411766, b: 0.10980393, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -33616,6 +33616,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1798017898000850806, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
+      propertyPath: wallDistance
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3604558140508137820, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.69
@@ -33656,6 +33660,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6046015100220001615, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
+      propertyPath: enableDash
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6046015100220001615, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
+      propertyPath: enableAirJump
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6046015100220001615, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
+      propertyPath: enableWallSliding
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7022172969953452335, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
       propertyPath: m_ActionEvents.Array.size
       value: 16
@@ -33667,14 +33683,6 @@ PrefabInstance:
     - target: {fileID: 7022172969953452335, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
       propertyPath: m_ActionEvents.Array.data[15].m_ActionName
       value: Player/Dash[/Keyboard/leftShift]
-      objectReference: {fileID: 0}
-    - target: {fileID: 7022172969953452335, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
-      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7022172969953452335, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
-      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8877583548782141071, guid: 393eae72318bd2f49908b7cae19657de, type: 3}
       propertyPath: m_Name
@@ -33785,10 +33793,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
+  - {fileID: 1604312630}
   - {fileID: 619394802}
   - {fileID: 335599017}
   - {fileID: 7985907899846563198}
-  - {fileID: 1604312630}
   - {fileID: 1079430349}
   - {fileID: 8903660722626213427}
   - {fileID: 871735611}
@@ -33800,9 +33808,9 @@ SceneRoots:
   - {fileID: 1835060671}
   - {fileID: 3675422836013542634}
   - {fileID: 620301001}
+  - {fileID: 7564913018189600252}
   - {fileID: 2023750625}
   - {fileID: 1606075385}
   - {fileID: 901702776150890567}
   - {fileID: 2085230054}
   - {fileID: 933679532}
-  - {fileID: 7564913018189600252}
