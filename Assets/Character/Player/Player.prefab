@@ -338,12 +338,13 @@ MonoBehaviour:
   moveSpeed: 7
   airWalkSpeed: 6
   jumpImpulse: 10
-  enableAirJump: 1
+  enableAirJump: 0
   isOnPlatform: 0
-  enableDash: 1
+  enableDash: 0
   dashingPower: 24
   dashingTime: 0.2
   dashingCooldown: 1
+  enableWallSliding: 0
   wallSlidingSpeed: 2
   wallJumpingDirection: 0
   wallJumpingTime: 0.2
