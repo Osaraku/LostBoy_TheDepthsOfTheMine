@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
     private bool isJumpPressed = false;
     public bool enableAirJump = false;
     private bool hasAirJump = false;
-    public bool isOnPlatform;
     public bool enableDash = false;
     private bool isDashing;
     public float dashingPower = 24f;
@@ -28,8 +27,10 @@ public class PlayerController : MonoBehaviour
     public float wallJumpingCounter;
     public float wallJumpingDuration = 0.4f;
     private Vector2 wallJumpingPower = new Vector2(5f, 10f);
+    public bool isOnPlatform;
 
 
+    Vector2 checkpointPos;
     Vector2 moveInput;
     TouchingDirection touchingDirection;
     Damageable damageable;
@@ -219,6 +220,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!damageable.IsAlive)
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
+
         if (isDashing)
         {
             return;
@@ -257,6 +263,26 @@ public class PlayerController : MonoBehaviour
             }
         }
         animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
+    }
+
+    int healthOnCheckpoint = 100;
+    public void checkpointUpdate(Vector2 pos, int health)
+    {
+        checkpointPos = pos;
+        healthOnCheckpoint = health;
+    }
+
+    public void onRestart(InputAction.CallbackContext context)
+    {
+        Debug.Log("Restart");
+        if (!IsAlive && context.started)
+        {
+            rb.simulated = false;
+            damageable.Health = healthOnCheckpoint;
+            damageable.IsAlive = true;
+            transform.position = checkpointPos;
+            rb.simulated = true;
+        }
     }
 
     public void onMove(InputAction.CallbackContext context)

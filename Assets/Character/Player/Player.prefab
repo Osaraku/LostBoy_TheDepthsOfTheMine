@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 966975195735990889}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.1899996, y: -0.061105967, z: -0.5055682}
+  m_LocalPosition: {x: 1.1899996, y: -0.81110597, z: -0.5055682}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -116,8 +116,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.8
-      minScalar: 0.3
+      scalar: 1
+      minScalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -751,7 +751,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.7295781
+      value: 0.2780714
       mode: 3
       spread: 0
       speed:
@@ -980,7 +980,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 20
+        scalar: 10
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -14955,7 +14955,7 @@ Transform:
   m_GameObject: {fileID: 8877583548782141071}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.9440029, y: 1.061106, z: -10.044569}
+  m_LocalPosition: {x: -10, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15059,7 +15059,6 @@ MonoBehaviour:
   airWalkSpeed: 6
   jumpImpulse: 10
   enableAirJump: 0
-  isOnPlatform: 0
   enableDash: 0
   dashingPower: 24
   dashingTime: 0.2
@@ -15070,6 +15069,7 @@ MonoBehaviour:
   wallJumpingTime: 0.2
   wallJumpingCounter: 0
   wallJumpingDuration: 0.4
+  isOnPlatform: 0
   platformRb: {fileID: 0}
   tr: {fileID: 4403464707890943203}
   _isMoving: 0
@@ -15213,6 +15213,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 9ed5673c-f322-410c-bcd4-dd49efaf2bdb
     m_ActionName: Player/Dash[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6046015100220001615}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: onRestart
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1ee0d219-dd65-4b8b-abcd-63ee23e977f9
+    m_ActionName: Player/Restart[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

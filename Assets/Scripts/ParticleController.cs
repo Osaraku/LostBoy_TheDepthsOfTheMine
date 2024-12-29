@@ -18,7 +18,6 @@ public class ParticleController : MonoBehaviour
     [SerializeField] TouchingDirection playerTd;
     [SerializeField] PlayerController playerController;
     private bool isFalling;
-    private bool isTouching;
 
     float counter;
 
@@ -44,19 +43,13 @@ public class ParticleController : MonoBehaviour
             isFalling = true;
         }
 
-        if (!playerTd.isOnWall)
+        if (!playerController.isOnPlatform && playerTd.isGrounded && Mathf.Abs(playerRb.velocity.x) > occurAfterVelocity)
         {
-            isTouching = true;
-        }
-
-        if (playerTd.isGrounded && Mathf.Abs(playerRb.velocity.x) > occurAfterVelocity)
-        {
-            if (Mathf.Abs(playerRb.velocity.x) > occurAfterVelocity)
-                if (counter > dustFormationPeriod)
-                {
-                    movementParticle.Play();
-                    counter = 0;
-                }
+            if (counter > dustFormationPeriod)
+            {
+                movementParticle.Play();
+                counter = 0;
+            }
         }
 
         if (playerTd.isGrounded && isFalling)
@@ -65,10 +58,13 @@ public class ParticleController : MonoBehaviour
             isFalling = false;
         }
 
-        if (playerTd.isOnWall && isTouching)
+        if (playerController.isWallSliding && Mathf.Abs(playerRb.velocity.y) > occurAfterVelocity)
         {
-            touchParticle.Play();
-            isTouching = false;
+            if (counter > dustFormationPeriod)
+            {
+                touchParticle.Play();
+                counter = 0;
+            }
         }
     }
 
