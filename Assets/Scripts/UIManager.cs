@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using System.Threading;
 
 public class UIManager : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class UIManager : MonoBehaviour
         CharacterEvents.characterDamaged += (CharacterTookDamage);
         CharacterEvents.characterHealed += (CharacterHealed);
         CharacterEvents.pickaxeUpgraded += (PickaxeUpgraded);
+        CharacterEvents.barrierImmune += (BarrierImmune);
     }
 
     private void OnDisable()
@@ -30,6 +32,7 @@ public class UIManager : MonoBehaviour
         CharacterEvents.characterDamaged -= (CharacterTookDamage);
         CharacterEvents.characterHealed -= (CharacterHealed);
         CharacterEvents.pickaxeUpgraded -= (PickaxeUpgraded);
+        CharacterEvents.barrierImmune -= (BarrierImmune);
     }
 
 
@@ -49,6 +52,26 @@ public class UIManager : MonoBehaviour
         TMP_Text tmpText = Instantiate(healthTextPrefab, spawnPosition, Quaternion.identity, gameCanvas.transform).GetComponent<TMP_Text>();
 
         tmpText.text = healthRestored.ToString();
+    }
+
+    public void BarrierImmune(GameObject character, int health)
+    {
+        Vector3 spawnPosition = Camera.main.WorldToScreenPoint(character.transform.position);
+
+        TMP_Text tmpText = Instantiate(upgradeTextPrefab, spawnPosition, Quaternion.identity, gameCanvas.transform).GetComponent<TMP_Text>();
+
+        if (health == 15)
+        {
+            tmpText.text = "Diperlukan Bronze Pickaxe";
+        }
+        else if (health == 25)
+        {
+            tmpText.text = "Diperlukan Iron Pickaxe";
+        }
+        else if (health == 35)
+        {
+            tmpText.text = "Diperlukan Gold Pickaxe";
+        }
     }
 
     public void PickaxeUpgraded(GameObject character, int baseAttack, int damageUpgrade, int playerDamage)

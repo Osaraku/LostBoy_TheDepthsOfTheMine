@@ -51,6 +51,8 @@ public class Damageable : MonoBehaviour
     private bool _isAlive = true;
     [SerializeField]
     private bool isInvincible = false;
+    [SerializeField]
+    private bool isRockBarrier = false;
 
     private float timeSinceHit = 0;
     public float invincibilityTime = 0.25f;
@@ -112,6 +114,18 @@ public class Damageable : MonoBehaviour
             CharacterEvents.characterDamaged.Invoke(gameObject, damage);
 
             return true;
+        }
+
+        if (isRockBarrier)
+        {
+            if (damage >= Health)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                CharacterEvents.barrierImmune.Invoke(gameObject, MaxHealth);
+            }
         }
 
         return false;

@@ -61,11 +61,14 @@ public class HealthIndicator : MonoBehaviour
         }
         else if (healthPercentage > 0 && healthPercentage <= 0.45)
         {
+            transform.GetChild(3).gameObject.SetActive(false);
             transform.GetChild(2).gameObject.SetActive(false);
             transform.GetChild(1).gameObject.SetActive(true);
         }
         else if (healthPercentage <= 0)
         {
+            transform.GetChild(3).gameObject.SetActive(false);
+            transform.GetChild(2).gameObject.SetActive(false);
             transform.GetChild(1).gameObject.SetActive(false);
             transform.GetChild(0).gameObject.SetActive(true);
         }
