@@ -148,6 +148,7 @@ MonoBehaviour:
   loopSound: 0
   loopInterval: 1
   playDelay: 0.25
+  outputMixerGroup: {fileID: -6816532410462054896, guid: 6803126748c4f1d4585fa196b74ae00b, type: 2}
 --- !u!1107 &-2478963067985580082
 AnimatorStateMachine:
   serializedVersion: 6
@@ -570,6 +571,7 @@ MonoBehaviour:
   loopSound: 0
   loopInterval: 1
   playDelay: 0.25
+  outputMixerGroup: {fileID: -6816532410462054896, guid: 6803126748c4f1d4585fa196b74ae00b, type: 2}
 --- !u!114 &7313356079523563150
 MonoBehaviour:
   m_ObjectHideFlags: 1

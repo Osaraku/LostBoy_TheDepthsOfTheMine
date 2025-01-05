@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio; // Tambahkan namespace Audio untuk menggunakan Audio Mixer
 
 public class PlayOneShotBehaviour : StateMachineBehaviour
 {
@@ -17,18 +18,21 @@ public class PlayOneShotBehaviour : StateMachineBehaviour
     private float loopTimer = 0;
     private bool hasDelayedSoundPlayed = false;
 
+    // Referensi ke Audio Mixer Group
+    public AudioMixerGroup outputMixerGroup; // Tambahkan opsi untuk Audio Mixer Group
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (playOnEnter && !loopSound)
         {
-            AudioSource.PlayClipAtPoint(soundToPlay, animator.gameObject.transform.position, volume);
+            PlaySound(animator);
         }
 
         if (playOnEnter && loopSound)
         {
             // Reset timer untuk loop
-            AudioSource.PlayClipAtPoint(soundToPlay, animator.gameObject.transform.position, volume);
+            PlaySound(animator);
             loopTimer = 0f;
         }
 
@@ -47,13 +51,13 @@ public class PlayOneShotBehaviour : StateMachineBehaviour
             {
                 if (!loopSound)
                 {
-                    AudioSource.PlayClipAtPoint(soundToPlay, animator.gameObject.transform.position, volume);
+                    PlaySound(animator);
                 }
                 else
                 {
                     // Reset timer untuk loop saat pertama kali diputar setelah delay
                     loopTimer = 0f;
-                    AudioSource.PlayClipAtPoint(soundToPlay, animator.gameObject.transform.position, volume);
+                    PlaySound(animator);
                 }
 
                 hasDelayedSoundPlayed = true;
@@ -68,7 +72,7 @@ public class PlayOneShotBehaviour : StateMachineBehaviour
             if (loopTimer >= loopInterval)
             {
                 // Mainkan suara baru sesuai interval loop
-                AudioSource.PlayClipAtPoint(soundToPlay, animator.gameObject.transform.position, volume);
+                PlaySound(animator);
                 loopTimer = 0f; // Reset timer
             }
         }
@@ -79,9 +83,29 @@ public class PlayOneShotBehaviour : StateMachineBehaviour
     {
         if (playOnExit && !loopSound)
         {
-            AudioSource.PlayClipAtPoint(soundToPlay, animator.gameObject.transform.position, volume);
+            PlaySound(animator);
+        }
+    }
+
+    // Fungsi untuk memutar suara dengan mendukung Audio Mixer
+    private void PlaySound(Animator animator)
+    {
+        GameObject tempAudioSource = new GameObject("TempAudio");
+        tempAudioSource.transform.position = animator.gameObject.transform.position;
+
+        AudioSource audioSource = tempAudioSource.AddComponent<AudioSource>();
+        audioSource.clip = soundToPlay;
+        audioSource.volume = volume;
+
+        // Atur output Audio Mixer Group jika tersedia
+        if (outputMixerGroup != null)
+        {
+            audioSource.outputAudioMixerGroup = outputMixerGroup;
         }
 
-        // Tidak ada AudioSource yang perlu dihentikan karena kita menggunakan PlayClipAtPoint
+        audioSource.Play();
+
+        // Hancurkan GameObject setelah suara selesai diputar
+        GameObject.Destroy(tempAudioSource, soundToPlay.length);
     }
 }

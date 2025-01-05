@@ -28,14 +28,18 @@ public class PlayerController : MonoBehaviour
     public float wallJumpingDuration = 0.4f;
     private Vector2 wallJumpingPower = new Vector2(5f, 10f);
     public bool isOnPlatform;
+    public bool isOnJumper;
+    public bool hasLanding;
 
 
     Vector2 checkpointPos;
     Vector2 moveInput;
     TouchingDirection touchingDirection;
     Damageable damageable;
+    AudioSource pickupSource;
     public Rigidbody2D platformRb;
     public TrailRenderer tr;
+
 
     public float currentMoveSpeed
     {
@@ -215,6 +219,7 @@ public class PlayerController : MonoBehaviour
         touchingDirection = GetComponent<TouchingDirection>();
         damageable = GetComponent<Damageable>();
         tr = GetComponent<TrailRenderer>();
+        pickupSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -235,7 +240,17 @@ public class PlayerController : MonoBehaviour
             hasAirJump = false;
             animator.SetBool(AnimationStrings.hasAirJump, false);
             hasAirDashing = false;
+            if (hasLanding == false)
+            {
+                hasLanding = true;
+                AudioSource.PlayClipAtPoint(pickupSource.clip, gameObject.transform.position, pickupSource.volume);
+            }
         }
+        else
+        {
+            hasLanding = false;
+        }
+
 
         wallSlide();
         onWallJump();
@@ -255,8 +270,11 @@ public class PlayerController : MonoBehaviour
             {
                 if (isOnPlatform)
                 {
-                    Debug.Log("onPlatform");
                     rb.velocity = new Vector2((moveInput.x * currentMoveSpeed) + platformRb.velocity.x, rb.velocity.y);
+                }
+                else if (isOnJumper)
+                {
+                    rb.velocity = new Vector2((moveInput.x * currentMoveSpeed), jumpImpulse + (jumpImpulse / 3));
                 }
                 else
                     rb.velocity = new Vector2(moveInput.x * currentMoveSpeed, rb.velocity.y);
