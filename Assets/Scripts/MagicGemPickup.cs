@@ -45,11 +45,20 @@ public class MagicGemPickup : MonoBehaviour
             AudioSource.PlayClipAtPoint(pickupSource.clip, gameObject.transform.position, pickupSource.volume);
 
         if (enablingAirJump)
+        {
             playerController.enableAirJump = true;
-        if (enablingDash)
+            CharacterEvents.magicGemObtained(gameObject, 1);
+        }
+        else if (enablingDash)
+        {
             playerController.enableDash = true;
-        if (enablingWallSlide)
+            CharacterEvents.magicGemObtained(gameObject, 2);
+        }
+        else if (enablingWallSlide)
+        {
             playerController.enableWallSliding = true;
+            CharacterEvents.magicGemObtained(gameObject, 3);
+        }
 
         Destroy(gameObject);
     }

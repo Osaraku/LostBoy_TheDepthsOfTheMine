@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 966975195735990889}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.1899996, y: -0.81110597, z: -0.5055682}
+  m_LocalPosition: {x: 1.1899996, y: -0.81110597, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5117,7 +5117,7 @@ Transform:
   m_GameObject: {fileID: 1961713524723266315}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6899996, y: -1.061106, z: -0.5055682}
+  m_LocalPosition: {x: 0.6899996, y: -1.061106, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10060,7 +10060,7 @@ Transform:
   m_GameObject: {fileID: 5037043760268867887}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.7399998, y: -1.061106, z: -0.5055682}
+  m_LocalPosition: {x: 1.7399998, y: -1.061106, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14886,8 +14886,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -2057430769
-  m_SortingLayer: -2
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -15072,6 +15072,7 @@ MonoBehaviour:
   wallJumpingDuration: 0.4
   isOnPlatform: 0
   isOnJumper: 0
+  hasLanding: 0
   platformRb: {fileID: 0}
   tr: {fileID: 4403464707890943203}
   _isMoving: 0

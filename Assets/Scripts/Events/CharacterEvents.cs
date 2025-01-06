@@ -13,5 +13,6 @@ public class CharacterEvents
 
     public static UnityAction<GameObject, int> characterHealed;
     public static UnityAction<GameObject, int> barrierImmune;
+    public static UnityAction<GameObject, int> magicGemObtained;
     public static UnityAction<GameObject, int, int, int> pickaxeUpgraded;
 }

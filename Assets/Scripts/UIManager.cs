@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
         CharacterEvents.characterHealed += (CharacterHealed);
         CharacterEvents.pickaxeUpgraded += (PickaxeUpgraded);
         CharacterEvents.barrierImmune += (BarrierImmune);
+        CharacterEvents.magicGemObtained += (MagicGemObtained);
     }
 
     private void OnDisable()
@@ -33,6 +34,7 @@ public class UIManager : MonoBehaviour
         CharacterEvents.characterHealed -= (CharacterHealed);
         CharacterEvents.pickaxeUpgraded -= (PickaxeUpgraded);
         CharacterEvents.barrierImmune -= (BarrierImmune);
+        CharacterEvents.magicGemObtained -= (MagicGemObtained);
     }
 
 
@@ -71,6 +73,24 @@ public class UIManager : MonoBehaviour
         else if (health == 35)
         {
             tmpText.text = "Diperlukan Gold Pickaxe";
+        }
+    }
+
+    public void MagicGemObtained(GameObject character, int magicGem)
+    {
+        Vector3 spawnPosition = Camera.main.WorldToScreenPoint(character.transform.position);
+        TMP_Text tmpText = Instantiate(upgradeTextPrefab, spawnPosition, Quaternion.identity, gameCanvas.transform).GetComponent<TMP_Text>();
+        if (magicGem == 1)
+        {
+            tmpText.text = "Air Jump Enabled";
+        }
+        else if (magicGem == 2)
+        {
+            tmpText.text = "Dash Enabled";
+        }
+        else if (magicGem == 3)
+        {
+            tmpText.text = "Wall Slide Enabled";
         }
     }
 

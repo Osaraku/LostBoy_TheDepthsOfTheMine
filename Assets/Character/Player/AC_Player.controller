@@ -1124,7 +1124,7 @@ MonoBehaviour:
   loopSound: 0
   loopInterval: 1
   playDelay: 0.25
-  outputMixerGroup: {fileID: 0}
+  outputMixerGroup: {fileID: -6816532410462054896, guid: 6803126748c4f1d4585fa196b74ae00b, type: 2}
 --- !u!1101 &4247722958647225889
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1460,27 +1460,27 @@ AnimatorStateMachine:
   - {fileID: -5652817452146667150}
   m_EntryTransitions: []
   m_StateMachineTransitions:
+  - first: {fileID: -8424153287681031296}
+    second:
+    - {fileID: 6781144456334876414}
+    - {fileID: -3003844214373365030}
+    - {fileID: -7562419800729008313}
   - first: {fileID: -4437970192094346248}
     second:
     - {fileID: 4564445113208193327}
     - {fileID: 495944082384880171}
     - {fileID: 3323258211641789873}
     - {fileID: 6660403692535160238}
-  - first: {fileID: -8424153287681031296}
-    second:
-    - {fileID: 6781144456334876414}
-    - {fileID: -3003844214373365030}
-    - {fileID: -7562419800729008313}
   - first: {fileID: -6778259961981103417}
     second:
     - {fileID: -8402288049973640859}
-  - first: {fileID: 7598033484282658069}
-    second:
-    - {fileID: -6430928491308792170}
   - first: {fileID: -3113334659988983885}
     second:
     - {fileID: 6785311770584007653}
     - {fileID: -182953938430576448}
+  - first: {fileID: 7598033484282658069}
+    second:
+    - {fileID: -6430928491308792170}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 570, y: 120, z: 0}
   m_EntryPosition: {x: 50, y: 120, z: 0}

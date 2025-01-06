@@ -334,7 +334,7 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger(AnimationStrings.jumpTrigger);
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
         }
-        else if (context.started && !touchingDirection.isGrounded && !touchingDirection.isOnWall && canMove && !hasAirJump && enableAirJump)
+        else if (context.started && !touchingDirection.isGrounded && !isWallSliding && canMove && !hasAirJump && enableAirJump)
         {
             animator.SetTrigger(AnimationStrings.jumpTrigger);
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
